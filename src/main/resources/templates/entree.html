@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Entree</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>Entree</h1>
+
+    <a href="/entree/newEntree/">Entrer un nouveau mouvement</a>
+    <form th:action="@{/entree/search}" method="get">
+        <input type="text" name="nent" placeholder="Recherchez une Entrée avec le [numéro_entrée] " size="50">
+        <button type="submit" class="btn btn-info">Search</button>
+
+    </form>
+    <table class="table">
+        <thead class="table-header table-sub-heading-color">
+        <tr>
+
+            <th>ID</th>
+            <th>nent</th>
+            <th>date</th>
+            <th>description</th>
+            <th>montant</th>
+            <th>utilisateur</th>
+            <th>code</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody class="table-info table-active table-sub-heading-color">
+        <tr th:each="entree : ${listEntrees}" th:field="entree">
+            <td th:text="${entree.ident}"></td>
+            <td th:text="${entree.nent}"></td>
+            <td th:text="${#dates.format(entree.date,'dd/MM/yyyy')}"></td>
+            <td th:text="${entree.description}"></td>
+            <td th:text="${#numbers.formatCurrency(entree.montant)}"></td>
+            <td th:text="${entree.utilisateur.prenom}"></td>
+            <td th:text="${entree.code}"></td>
+            <td>
+                <a th:href="@{|/entree/edit/${entree.ident}|}">[Modif]</a>
+                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{|/entree/delete/${entree.ident}|}">[Suppr]</a>
+            </td>
+        </tr>
+        </tbody>
+
+
+    </table>
+</body>
+</html>
